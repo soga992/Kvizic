@@ -1,14 +1,23 @@
-<!--
-<div *ngIf="questions.length > 0">
-  <h2>Category: {{ category }}</h2>
-  <h3>Difficulty: {{ difficulty }}</h3>
-  <h4>Number of Questions: {{ numOfQuestions }}</h4>
+<div *ngIf="!isLoading; else loading">
+  <div *ngIf="questions.length > 0; else noQuestions">
+    <div class="question-container">
+      <h2>{{ questions[currentQuestionIndex]?.question }}</h2>
 
-  <div *ngFor="let question of questions">
-    <h4>{{ question.question }}</h4>
-    <div *ngFor="let option of question.options">
-      <button>{{ option }}</button>
+      <div *ngFor="let answer of getAnswers(currentQuestionIndex)">
+        <button (click)="checkAnswer(answer)">
+          {{ answer }}
+        </button>
+      </div>
     </div>
+
+    <button (click)="nextQuestion()">Next Question</button>
   </div>
 </div>
--->
+
+<ng-template #loading>
+  <p>Loading questions...</p>
+</ng-template>
+
+<ng-template #noQuestions>
+  <p>No questions available. Please try again later.</p>
+</ng-template>

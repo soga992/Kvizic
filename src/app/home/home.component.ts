@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Za *ngFor
-import { FormsModule } from '@angular/forms';   // Za ngModel
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Dodaj CommonModule i FormsModule
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  categories = ['General Knowledge', 'Science', 'History', 'Sports'];
+  categories = ['Linux', 'DevOps', 'Docker'];
   difficulties = ['Easy', 'Medium', 'Hard'];
   numOfQuestions = [5, 10, 15, 20];
 
@@ -18,7 +19,15 @@ export class HomeComponent {
   selectedDifficulty = this.difficulties[0];
   selectedNumOfQuestions = this.numOfQuestions[0];
 
-  startQuiz() {
-    // Logika za početak kviza
+  constructor(private router: Router) {}
+
+  startQuiz(): void {
+    console.log("Starting quiz..."); // Debug poruka
+    this.router.navigate(['/quiz'], {
+      queryParams: {
+        category: this.selectedCategory,
+        difficulty: this.selectedDifficulty
+      }
+    });
   }
 }

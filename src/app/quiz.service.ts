@@ -1,18 +1,26 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { QuizService } from './quiz.service';  // Importuj servis
 
-@Injectable({
-  providedIn: 'root',
+@Component({
+  selector: 'app-quiz',
+  templateUrl: './quiz.component.html',
+  styleUrls: ['./quiz.component.css']
 })
-export class QuizService {
-  private apiUrl = 'https://quizapi.io/api/v1/questions';
-  private apiKey = 'thOR1NfQxGsr9QXYGIDAGo2h4WVqs8ZdKBAsaTgX';
+export class QuizComponent implements OnInit {
+  questions: any[] = [];
+  errorMessage: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private quizService: QuizService) {}
 
-  getQuestions(): Observable<any> {
-    const headers = { 'X-Api-Key': this.apiKey };
-    return this.http.get(this.apiUrl, { headers });
+  ngOnInit(): void {
+    // Poziv servisa za dobijanje pitanja
+    this.quizService.getQuizQuestions('Linux', 'Easy').subscribe({
+      next: (data) => {
+        this.questions = data;
+      },
+      error: (error) => {
+        this.errorMessage = error.message;
+      }
+    });
   }
 }
