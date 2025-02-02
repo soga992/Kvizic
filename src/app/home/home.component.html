@@ -1,0 +1,20 @@
+<div class="quiz-settings">
+  <h1>Start Quiz</h1>
+
+  <label for="category">Category:</label>
+  <select [(ngModel)]="selectedCategory" id="category">
+    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+  </select>
+
+  <label for="difficulty">Difficulty:</label>
+  <select [(ngModel)]="selectedDifficulty" id="difficulty">
+    <option *ngFor="let difficulty of difficulties" [value]="difficulty">{{ difficulty }}</option>
+  </select>
+
+  <label for="numOfQuestions">Number of Questions:</label>
+  <select [(ngModel)]="selectedNumOfQuestions" id="numOfQuestions">
+    <option *ngFor="let num of numOfQuestions" [value]="num">{{ num }}</option>
+  </select>
+
+  <button (click)="startQuiz()">Start Quiz</button>
+</div>
